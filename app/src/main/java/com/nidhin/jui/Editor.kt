@@ -727,7 +727,14 @@ class NoteScroll(context: Context, store: NotesStore) : ScrollView(context) {
         set(value) { if (field != value) { field = value; updateInsets() } }
     /** True while the keyboard is up; the view then ends at its top. */
     var keyboardUp = false
-        set(value) { if (field != value) { field = value; updateInsets(); invalidate() } }
+        set(value) {
+            if (field == value) return
+            field = value
+            updateInsets()
+            invalidate()
+            // The keyboard came up over the caret: bring it back into view.
+            if (value && editor.hasFocus()) post { revealCaret() }
+        }
 
     companion object {
         const val FADE_BAND = 56f
@@ -752,6 +759,29 @@ class NoteScroll(context: Context, store: NotesStore) : ScrollView(context) {
         val side = Style.px(Style.SIDE_MARGIN).roundToInt()
         val bottom = if (keyboardUp) Style.px(KEYBOARD_CLEARANCE) else navBar + Style.px(RESTING_CLEARANCE)
         editor.setPadding(side, (statusBar + Style.px(Style.TOP_INSET)).roundToInt(), side, bottom.roundToInt())
+    }
+
+    // Whatever the editor asks to see — the caret, as it types or moves — is
+    // seen with room around it: clear of the band under the status bar, and
+    // above the keyboard (or the flourish) by the page's own clearance.
+    override fun requestChildRectangleOnScreen(child: android.view.View, rect: android.graphics.Rect, immediate: Boolean): Boolean {
+        val r = android.graphics.Rect(rect)
+        r.top -= (statusBar + Style.px(Style.BACK_BAND)).roundToInt()
+        r.bottom += (if (keyboardUp) Style.px(KEYBOARD_CLEARANCE) else navBar + Style.px(RESTING_CLEARANCE)).roundToInt()
+        return super.requestChildRectangleOnScreen(child, r, immediate)
+    }
+
+    // The page shrinks frame by frame as the keyboard rises; keep the caret
+    // in view the whole way up.
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        if (h < oldh && editor.hasFocus()) post { revealCaret() }
+    }
+
+    private fun revealCaret() {
+        val c = editor.caretRect(editor.selectionEnd) ?: return
+        val r = android.graphics.Rect(c.left.toInt(), c.top.toInt(), c.right.toInt() + 1, c.bottom.toInt())
+        requestChildRectangleOnScreen(editor, r, false)
     }
 
     override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {

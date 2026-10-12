@@ -16,12 +16,11 @@ class MainActivity : ComponentActivity() {
         setContent { JuiApp(store) }
     }
 
-    override fun onResume() {
-        super.onResume()
-        // Catches a mood chosen just before the app was closed. Not while a
-        // mood is still being chosen.
-        val store = Notes.store(this)
-        if (!store.hiddenShown && !store.onboardingShown) AppIcon.sync(this)
+    override fun onStop() {
+        super.onStop()
+        // The icon follows the mood — but only once the app is out of sight:
+        // switching the launcher alias ends the task it was opened from.
+        AppIcon.sync(this)
     }
 }
 

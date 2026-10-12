@@ -73,7 +73,7 @@ fun SearchPalette(store: NotesStore, onReveal: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             GlyphIcon(Glyph.SEARCH, inkFaint, 14f)
-            Box(Modifier.padding(start = 10.dp).weight(1f)) {
+            Box(Modifier.padding(start = 10.dp).weight(1f).height(22.dp), contentAlignment = Alignment.CenterStart) {
                 HouseField(
                     query, { query = it }, size = 14f,
                     placeholder = "search", placeholderAlpha = 0.55f, // inkMuted — a step firmer here

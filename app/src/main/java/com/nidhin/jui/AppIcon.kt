@@ -9,11 +9,11 @@ import android.content.pm.PackageManager
 // its theme's own sticky and open-dot colours. Android has no alternate icons;
 // each mood is an activity alias with its own icon, and exactly one is enabled.
 //
-// Switching an alias makes the launcher redraw its icons, so — as on the
-// iPhone, where each switch shows an alert — the icon is not switched on every
-// tap of a mood dot. It is brought into step once, when settings or onboarding
-// is left, and whenever the app comes back to the foreground, which catches a
-// change made just before it was closed.
+// The iPhone switches its icon when settings or onboarding is left. Android
+// can't: disabling the alias the app was opened from ends that task, closing
+// the app under the reader's finger. So the icon is brought into step when the
+// app leaves the foreground (MainActivity.onStop) — out of sight, and once,
+// however many moods were tried on the way.
 object AppIcon {
     private fun alias(context: Context, theme: Theme) =
         ComponentName(context.packageName, "com.nidhin.jui.Icon_${theme.id}")

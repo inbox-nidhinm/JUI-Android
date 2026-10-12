@@ -224,13 +224,6 @@ fun JuiApp(store: NotesStore) {
             else -> path.removeAt(path.lastIndex)
         }
     }
-
-    // The icon follows the mood they left on — settings or onboarding closing.
-    LaunchedEffect(Unit) {
-        snapshotFlow { store.hiddenShown || store.onboardingShown }.collect { choosing ->
-            if (!choosing) AppIcon.sync(context)
-        }
-    }
 }
 
 @Composable
@@ -458,7 +451,7 @@ private fun NoteEditor(store: NotesStore, modifier: Modifier) {
                 editor.post {
                     val length = editor.text?.length ?: 0
                     if (reveal != null) {
-                        editor.requestFocus()
+                        editor.showKeyboard()
                         editor.setSelection(reveal.first.coerceIn(0, length), (reveal.last + 1).coerceIn(0, length))
                     } else {
                         editor.setSelection(length)
