@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -226,6 +227,11 @@ fun OnboardingView(store: NotesStore) {
                 Box(
                     Modifier
                         .offset((D.LETTER_X * s).dp, (letter.value * s).dp)
+                        // Unbounded and pinned to the top: the letter is taller
+                        // than the envelope it sits in, and a plain size is cut
+                        // down to the envelope's — which left "back" hanging
+                        // off the foot of the letter.
+                        .wrapContentSize(Alignment.TopStart, unbounded = true)
                         .size((D.LETTER_W * s).dp, (D.LETTER_H * s).dp)
                         .pagePaper(tint = 0.3f),
                     contentAlignment = Alignment.TopCenter,
