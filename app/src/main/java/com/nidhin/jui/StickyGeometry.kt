@@ -19,15 +19,15 @@ import kotlin.math.roundToInt
  * in it — what the iPhone app gets from a fixed line height plus a baseline
  * offset. Android's own leading puts all the extra below the glyphs.
  */
-class CentredLineSpan(private val height: Int) : LineHeightSpan {
+class CentredLineSpan(private val height: Int, private val ascent: Int, private val descent: Int) : LineHeightSpan {
     override fun chooseHeight(
         text: CharSequence, start: Int, end: Int, spanstartv: Int, lineHeight: Int,
         fm: Paint.FontMetricsInt,
     ) {
-        val natural = fm.descent - fm.ascent
-        val extra = height - natural
-        val above = extra / 2
-        fm.ascent -= above
+        // The font's own metrics, not `fm`'s: on a wrapped line those are the
+        // line before's, already stretched.
+        val above = (height - (descent - ascent)) / 2
+        fm.ascent = ascent - above
         fm.descent = fm.ascent + height
         fm.top = fm.ascent
         fm.bottom = fm.descent
@@ -55,7 +55,11 @@ object StickyText {
         color = Style.ink
     }
 
-    fun lineSpan(density: Float = Style.density) = CentredLineSpan((LINE * density).roundToInt())
+    /** `paint` is the one the text is set with — passed in off the main thread. */
+    fun lineSpan(density: Float = Style.density, paint: Paint = paint(density)): CentredLineSpan {
+        val fm = paint.fontMetricsInt
+        return CentredLineSpan((LINE * density).roundToInt(), fm.ascent, fm.descent)
+    }
 
     /** The text laid out at `widthPx`, every line exactly `LINE` tall. */
     fun layout(text: CharSequence, widthPx: Int, density: Float = Style.density): StaticLayout {

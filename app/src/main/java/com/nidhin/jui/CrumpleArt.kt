@@ -130,7 +130,7 @@ object CrumpleArt {
             color = look.ink
         }
         val spanned = SpannableString(text)
-        spanned.setSpan(StickyText.lineSpan(SCALE), 0, spanned.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+        spanned.setSpan(StickyText.lineSpan(SCALE, paint), 0, spanned.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
         val layout = StaticLayout.Builder.obtain(spanned, 0, spanned.length, paint, boxW.roundToInt())
             .setAlignment(Layout.Alignment.ALIGN_NORMAL)
             .setIncludePad(false)

@@ -91,3 +91,6 @@ fun withAlpha(color: Int, alpha: Float): Int =
     ((alpha.coerceIn(0f, 1f) * 255).toInt() shl 24) or (color and 0xFFFFFF)
 
 fun Int.compose(): Color = Color(this)
+
+/** The system's destructive red, for the two menu rows that delete. */
+val destructiveColor = Color(0xFFB3261E)
