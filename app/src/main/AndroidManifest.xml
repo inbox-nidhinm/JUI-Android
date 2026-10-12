@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher_cream"
+        android:label="@string/app_name"
+        android:supportsRtl="false"
+        android:theme="@style/Theme.JUI">
+
+        <!-- Portrait only, light only, as on the iPhone. The keyboard resizes
+             nothing: the page reads the IME inset itself. -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|keyboard|uiMode|fontScale|density" />
+
+        <!-- The launcher icon follows the mood (AppIcon.kt): one alias per
+             theme, exactly one enabled. Cream is the default. -->
+        <activity-alias android:name=".Icon_cream" android:targetActivity=".MainActivity"
+            android:icon="@mipmap/ic_launcher_cream" android:enabled="true" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias android:name=".Icon_mint" android:targetActivity=".MainActivity"
+            android:icon="@mipmap/ic_launcher_mint" android:enabled="false" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias android:name=".Icon_sky" android:targetActivity=".MainActivity"
+            android:icon="@mipmap/ic_launcher_sky" android:enabled="false" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias android:name=".Icon_coral" android:targetActivity=".MainActivity"
+            android:icon="@mipmap/ic_launcher_coral" android:enabled="false" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias android:name=".Icon_lilac" android:targetActivity=".MainActivity"
+            android:icon="@mipmap/ic_launcher_lilac" android:enabled="false" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias android:name=".Icon_orchid" android:targetActivity=".MainActivity"
+            android:icon="@mipmap/ic_launcher_orchid" android:enabled="false" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+    </application>
+</manifest>

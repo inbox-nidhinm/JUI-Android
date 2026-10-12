@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The launch background is the cream sheet; everything after reads the theme. -->
+    <color name="launch_background">#FDF0D9</color>
+    <!-- One tile colour per mood icon: each theme's sticky colour. -->
+    <color name="icon_cream">#F7C82D</color>
+    <color name="icon_mint">#61E7C1</color>
+    <color name="icon_sky">#65BFFF</color>
+    <color name="icon_coral">#FF985E</color>
+    <color name="icon_lilac">#C18FFF</color>
+    <color name="icon_orchid">#FF87E5</color>
+</resources>
