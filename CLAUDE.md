@@ -21,7 +21,12 @@ changing anything ported from it.
   `<uuid>.rtf`, `<uuid>.stickies.json`, one level of folders. No sync yet; the
   settings row says "On this phone". Sync (Google Drive or otherwise) is a
   later decision.
-- **Sideloaded**, signed with the debug key; no Play Store.
+- **Sideloaded**, signed with this Mac's debug key (`~/.android/debug.keystore`);
+  no Play Store. `./apk.sh` builds the release APK into `apk/JUI.apk`, which is
+  committed so the repo always has an installable copy — rebuild and commit it
+  with any change meant for the phone. A phone takes an update only from the
+  same key, and uninstalling to get past a key change deletes the notes, so
+  that keystore must not be lost.
 - Everything else is the iPhone app's: home screen, note screen with only the
   word count, the corner flourish over every screen, stickies as crumpled balls
   in the line, search on home, the envelope onboarding, the hidden settings
@@ -72,6 +77,7 @@ changing anything ported from it.
 ```bash
 ./run.sh                 # build, install on the running emulator, launch
 ./run.sh shot NAME       # …and save build/shots/NAME.png
+./apk.sh                 # release APK → apk/JUI.apk (commit it)
 ./gradlew testDebugUnitTest
 ```
 
