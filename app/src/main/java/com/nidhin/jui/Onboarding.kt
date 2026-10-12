@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -230,7 +231,10 @@ fun OnboardingView(store: NotesStore) {
                     contentAlignment = Alignment.TopCenter,
                 ) {
                     Column(
+                        // Unbounded: the controls keep a finger's size however
+                        // small the letter is drawn.
                         Modifier.padding(top = (D.CONTENT_Y * s).dp).width((D.CONTENT_W * s).dp)
+                            .wrapContentHeight(Alignment.Top, unbounded = true)
                             .alpha(if (finishing) 0f else 1f),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
@@ -269,7 +273,7 @@ fun OnboardingView(store: NotesStore) {
                         OnboardingPill(if (step == Step.WELCOME) "begin" else "next", canAdvance, ::advance)
                         if (step != Step.WELCOME) {
                             Box(
-                                Modifier.heightIn(min = 40.dp)
+                                Modifier.height(40.dp)
                                     .clickable(remember { MutableInteractionSource() }, indication = null) { back() }
                                     .padding(horizontal = 16.dp),
                                 contentAlignment = Alignment.Center,
